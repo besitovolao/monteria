@@ -723,6 +723,14 @@ function StudentSelfView({studentId,onLogout}){
         "Actualiza tu información cada año. Tu nombre, documento y tipo de documento no se pueden modificar aquí; si hay un error en esos datos, contacta a la institución."
       ),
       h('div',{className:"flex gap-1 flex-wrap"},STUDENT_SECTIONS.map((sec,i)=>h('button',{key:sec.id,onClick:()=>setActiveSection(i),className:`px-3 py-1.5 rounded-full text-sm whitespace-nowrap ${activeSection===i?"bg-indigo-600 text-white":"bg-slate-100 text-slate-600 hover:bg-slate-200"}`},sec.label))),
+      h('div',{className:"bg-sky-50 border border-sky-200 text-sky-700 text-xs rounded-lg px-4 py-2.5 flex items-start gap-2"},
+        h(Icons.Info),
+        h('span',null,
+          STUDENT_SECTIONS[activeSection].id==="familiar"
+            ?h('span',null,h('strong',null,"Esta sección la debe llenar el acudiente responsable. "),"La información de este apartado corresponde a la persona a cargo del estudiante, no al estudiante mismo.")
+            :h('span',null,h('strong',null,"Esta sección corresponde únicamente al estudiante"),nombre?` (${nombre})`:"",". No registres aquí datos del acudiente o de otra persona.")
+        )
+      ),
       h('div',{className:"bg-white rounded-xl border border-slate-200 p-5"},
         h('div',{className:"grid grid-cols-1 md:grid-cols-2 gap-4"},
           FIELD_DEFS.filter(f=>f.section===STUDENT_SECTIONS[activeSection].id&&!f.hidden&&!f.adminOnly).map(f=>
